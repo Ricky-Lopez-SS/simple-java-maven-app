@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured in tools and add it to the path.
+        maven "apache-maven-3.8.4"
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                // Get some code from a GitHub repository
+                git 'https://github.com/Ricky-Lopez-SS/simple-java-maven-app.git'
+
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                
+                
+            }
+        }
+        
+        stage('Archive'){
+            
+            steps {
+            
+                junit '**/target/surefire-reports/TEST-*.xml'
+                archiveArtifacts 'target/*.jar'
+            
+            }
+            
+        }
+
+    }
+}
