@@ -38,7 +38,7 @@ pipeline {
 
             steps {
 
-                s3Upload(file:'target/*.jar', bucket:'rll-artifact-bucket', path:'my-app-1.0-SNAPSHOT.jar') 
+                s3Upload(file:'target/my-app-1.0-SNAPSHOT.jar', bucket:'rll-artifact-bucket', path:'my-app-1.0-SNAPSHOT.jar') 
 
             }
         }
