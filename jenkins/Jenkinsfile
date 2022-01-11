@@ -6,6 +6,10 @@ pipeline {
         maven "apache-maven-3.8.4"
     }
 
+    options {
+        withAWS(credentials:'RickyAdmin')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -34,7 +38,7 @@ pipeline {
 
             steps {
 
-                s3Upload consoleLogLevel: 'INFO', dontSetBuildResultOnFailure: false, dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'rll-artifact-bucket', excludedFile: '', flatten: false, gzipFiles: false, keepForever: false, managedArtifacts: false, noUploadOnFailure: true, selectedRegion: 'eu-central-1', showDirectlyInBrowser: false, sourceFile: 'target/*.jar', storageClass: 'STANDARD', uploadFromSlave: false, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: 'Ricky', userMetadata: []
+                s3Upload(file:'target/*.jar', bucket:'rll-artifact-bucket', path:'my-app-1.0-SNAPSHOT.jar') 
 
             }
         }
